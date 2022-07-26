@@ -53,31 +53,6 @@ function renderRoom(room) {
     return room_div;
 }
 
-// This function checks if 2 arrays have the same values regardless of order.
-function compareArrays(array1, array2) {
-    let array1_sorted = array1.slice().sort();
-    let array2_sorted = array2.slice().sort();
-
-    if (array1_sorted.length === array2_sorted.length && array2_sorted.every((value, index) => value === array1_sorted[index])) {
-        return true;
-    } else {
-        return false;
-    }
-}
-// This function checks if values of array2 can be found in array1
-function excludeFoundSeats(array1, array2) {
-    let found = 0;
-    array2.forEach((value) => {
-        if (array1.includes(value)) {
-            found++;
-        }
-    })
-    if (found > 0) {
-        return found;
-    } else {
-        return false;
-    }
-}
 // This function checks if there are reserved seats in the searcharray
 // The catch is that array1 is and array of objects.
 function excludeFoundSeats(objectArray, array) {
@@ -95,9 +70,8 @@ function excludeFoundSeats(objectArray, array) {
         return true;
     }
 }
-
+// This function returns an array with all the seat in the center columns 
 function centerColumnSeats(theater) {
-    // const totalRows = theater.length;
     const totalColumns = theater[0].length;
     const edgeColumns = Math.round(totalColumns / 4);
     let centeredSeats = [];
@@ -111,6 +85,7 @@ function centerColumnSeats(theater) {
     return centeredSeats;
 }
 
+// This function returns the combination of seats that has the most seats located in the center columns.
 function searchCenteredSeats(seatClassMultiArray, allCenteredSeatsArray) {
     let fullCenter = [];
     let partCenter = [];
@@ -139,6 +114,7 @@ function searchCenteredSeats(seatClassMultiArray, allCenteredSeatsArray) {
     }
 }
 
+// These variabels are used in the seatFinder function.
 let remainingSeats = 0;
 let nrSeatsNeeded = 0;
 let return_array = [];
@@ -244,6 +220,7 @@ async function seatFinder(groupsize, theaterroom) {
         remainingSeats++;
         if (remainingSeats == nrSeatsNeeded) {
             console.log("Group is too big, no " + nrSeatsNeeded + " seats found");
+            remainingSeats = 0;
             return null;
         }
         console.log("Seats left: " + remainingSeats);
@@ -270,7 +247,8 @@ function showSeats(selected_room, foundseats) {
     }
 }
 
-// Set group size limit
+// Set group size limit for the groupsize input.
+// The max is the max theater row length.
 Array.from(elementClass('movies')).forEach(function(movie) {
     movie.addEventListener("click", function(event) {
         let row_length = roomFinder(movie.value)[0].length;
@@ -282,6 +260,7 @@ Array.from(elementClass('movies')).forEach(function(movie) {
 // Referance and copy of the theaterroom.
 let selected_room;
 let selected_room_copy;
+
 //Eventhandeler book-btn
 elementID("book-btn").addEventListener("click", function(event) {
     let num_seats = elementID("groupsize").value;
@@ -300,14 +279,18 @@ elementID("book-btn").addEventListener("click", function(event) {
     seatFinder(num_seats, selected_room_copy).then(
         function(value) {
             console.log("async return:" + value);
-            showSeats(selected_room, value);
+            if (value) {
+                showSeats(selected_room, value);
+            } else {
+                alert("No seats found. PLease try a smaller group.")
+            }
         }
     );
-    // showSeats(selected_room, seatFinder(num_seats, selected_room_copy));
 })
 
-
-// These are the theaterrooms. Rooms 1 and 2 are hardcoded
+//////////////////////////////////////////////////////////
+///////////////////// Theaterrooms ///////////////////////
+// Rooms 1 and 2 are hardcoded
 // Room 3 is auto genereated with randomized inputs
 
 // This is the theaterroom class
