@@ -265,6 +265,8 @@ Array.from(elementClass('movies')).forEach(function(movie) {
 let selected_room;
 let selected_room_copy;
 let availableSeats;
+let selectedMovie;
+let selectedDate;
 
 //Eventhandeler book-btn
 elementID("book-btn").addEventListener("click", function(event) {
@@ -273,6 +275,8 @@ elementID("book-btn").addEventListener("click", function(event) {
     // check radio input & find theatherroom
     Array.from(elementClass('movies')).forEach(function(movie) {
         if (movie.checked) {
+            selectedMovie = movie.value;
+            selectedDate = elementID("date").value;
             selected_room = roomFinder(movie.value);
             // Copy selected_room with Lodash library
             selected_room_copy = selected_room.map(a => {
@@ -294,8 +298,14 @@ elementID("book-btn").addEventListener("click", function(event) {
     );
 })
 elementID("reserve-btn").addEventListener("click", function(event) {
-    alert("ready to work");
-    
+    let random_id = Math.floor(Math.random() * 10000 + 1);
+    let bookingdata = {
+        booking_id: random_id,
+        date: selectedDate,
+        movie: selectedMovie,
+        seats: availableSeats
+    };
+    console.log(bookingdata);
 })
 //////////////////////////////////////////////////////////
 ///////////////////// Theaterrooms ///////////////////////
