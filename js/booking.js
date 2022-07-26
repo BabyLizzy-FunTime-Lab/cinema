@@ -260,9 +260,11 @@ Array.from(elementClass('movies')).forEach(function(movie) {
     })
 })
 
+// Variabels used by eventhandelers
 // Referance and copy of the theaterroom.
 let selected_room;
 let selected_room_copy;
+let availableSeats;
 
 //Eventhandeler book-btn
 elementID("book-btn").addEventListener("click", function(event) {
@@ -281,16 +283,20 @@ elementID("book-btn").addEventListener("click", function(event) {
     })
     seatFinder(num_seats, selected_room_copy).then(
         function(value) {
-            console.log("async return:" + value);
             if (value) {
                 showSeats(selected_room, value);
+                availableSeats = value;
+                console.log("Availableseats: " + availableSeats);
             } else {
                 alert("No seats found. PLease try a smaller group.")
             }
         }
     );
 })
-
+elementID("reserve-btn").addEventListener("click", function(event) {
+    alert("ready to work");
+    
+})
 //////////////////////////////////////////////////////////
 ///////////////////// Theaterrooms ///////////////////////
 // Rooms 1 and 2 are hardcoded
