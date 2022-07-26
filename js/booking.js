@@ -307,6 +307,8 @@ elementID("reserve-btn").addEventListener("click", function(event) {
     };
     console.log(bookingdata);
 })
+
+
 //////////////////////////////////////////////////////////
 ///////////////////// Theaterrooms ///////////////////////
 // Rooms 1 and 2 are hardcoded
