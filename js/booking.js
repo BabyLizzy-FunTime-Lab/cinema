@@ -19,6 +19,9 @@ function roomFinder(movie) {
         case "The Room":
             return room_three.room;
             break;
+        case "Dredd":
+            return room_four.room;
+            break;
         default:
             console.log("Movie/Room not found");
     }
@@ -291,7 +294,7 @@ elementID("book-btn").addEventListener("click", function(event) {
 //////////////////////////////////////////////////////////
 ///////////////////// Theaterrooms ///////////////////////
 // Rooms 1 and 2 are hardcoded
-// Room 3 is auto genereated with randomized inputs
+// Room 3 is auto genereated with the theaterroom makeroom class method
 
 // This is the theaterroom class
 class theaterroom {
@@ -307,10 +310,16 @@ class theaterroom {
         let seatsTakenArray = [];
         // Make aan array of randomly selected seats
         // Generate seatstaken amount of random numbers between 1 and totalseats
-        while (seatsTakenArray.length < this.seatsTaken) {
-            let randomNumber = Math.floor(Math.random() * this.totalSeats + 1);
-            if(seatsTakenArray.indexOf(randomNumber) === -1) seatsTakenArray.push(randomNumber);
+        if (Array.isArray(this.seatsTaken)) {
+            console.log("We got array");
+            seatsTakenArray.push(...this.seatsTaken);
+        } else {
+            while (seatsTakenArray.length < this.seatsTaken) {
+                let randomNumber = Math.floor(Math.random() * this.totalSeats + 1);
+                if(seatsTakenArray.indexOf(randomNumber) === -1) seatsTakenArray.push(randomNumber);
+            }
         }
+        
         console.log(seatsTakenArray);
         this.room = [];
         for (let rowcount = 0; rowcount < this.rows; rowcount++) {
@@ -332,9 +341,15 @@ class theaterroom {
     }
 }
 
-const room_three = new theaterroom("three", 8, 8, 30);
+let bluebirdSeats = [1,2,11,12,13,20,21,22,23,24,25,32,33,49,50]
+const room_three = new theaterroom("three", 5, 10, bluebirdSeats);
 room_three.makeRoom();
 console.log(room_three.room);
+
+const room_four = new theaterroom("four", 12, 10, 60);
+room_four.makeRoom();
+console.log(room_four.room);
+
 
 let room_1 = [
     // row 1
