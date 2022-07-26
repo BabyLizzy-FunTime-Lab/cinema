@@ -12,6 +12,8 @@
 	--color-seats-taken: rgb(255, 204, 220);
 	--color-seats-open: rgb(128, 255, 128);
 	--color-seats-advised: rgb(102, 163, 255);
+	/* images */
+	--banner-image: "Banner.jpg";
 }
 body {
 	background-color: var(--color-whitesmoke);
@@ -20,7 +22,7 @@ body {
 	font-family: var(--font-mainheaders);
 	font-size: 1.5em;
 	text-align: center;
-	/* height: 100vh; */
+	height: 100vh;
 }
 #booking-container {
 	font-family: var(--font-text);
